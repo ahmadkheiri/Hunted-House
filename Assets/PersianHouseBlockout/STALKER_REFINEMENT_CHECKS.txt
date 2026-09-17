@@ -1,0 +1,6 @@
+PASS: outer radius alerts; inner radius is exactly 50% at all brightness levels.
+PASS: initial detection allows an alert response window; dimming prevents escalation.
+PASS: actual ascent/descent never enters a scan or stopped state on the staircase.
+PASS: Alert/Roam changes preserve the committed stair path.
+PASS: upstairs enemy continues to an observation stop; downstairs continues to a ground-floor lookout.
+PASS: four spatial footstep clips play while walking and no new steps play while scanning.

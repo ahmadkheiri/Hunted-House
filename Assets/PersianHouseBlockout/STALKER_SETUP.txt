@@ -1,0 +1,4 @@
+Navigation built from mansion colliders.
+46/48 observation stops reachable; ground 23, upper 21, cellar 2
+Enemy height 2.1m; child 1.1m.
+Editable observation stops are under Stalker navigation and patrol.

@@ -1,0 +1,8 @@
+PASS: navigation agent loaded and roams.
+PASS: bright light increases recognition range.
+PASS: distant dark sight alerts; bright sight chases.
+PASS: proximity recognizes player in darkness.
+PASS: visible lantern evidence alerts without automatic chase.
+PASS: occluding wall blocks sight.
+PASS: lost target returns to Alert at last seen location, without hidden-player tracking.
+PASS: search expires to Roaming.

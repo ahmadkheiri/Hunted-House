@@ -1,0 +1,6 @@
+PASS: real player and lantern produce Alert/Chase at the expected brightness.
+PASS: real wall occludes player and preserves last known position.
+PASS: target behind enemy is outside field of view.
+PASS: agent walked from ground to upper floor using the mansion stairs.
+PASS: agent walked from upper floor down to cellar.
+Enemy preview captured from child height.

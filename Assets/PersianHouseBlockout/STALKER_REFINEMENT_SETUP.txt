@@ -1,0 +1,1 @@
+Three stair passages configured. Four original spatial boot-step clips added. Chase radius is half the brightness-dependent alert radius.
