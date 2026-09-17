@@ -1,0 +1,7 @@
+Global lighting / lantern fix
+Verified in Unity Play Mode with before, lights-off, and restored captures.
+- Removed the yellow fullscreen washout with bounded bloom and no daytime fog in darkness mode.
+- Reduced visible flame emission; point-light lumen output remains unchanged.
+- Night exposure is -2 EV for nearby surface visibility.
+- Exposure is updated in LateUpdate after L toggles the scene lights.
+- Daylight exposure is restored immediately when global lighting returns.

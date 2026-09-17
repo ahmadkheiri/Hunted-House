@@ -1,0 +1,4 @@
+PASS: global lights turn off and restore their original states.
+PASS: flashlight stays unchanged.
+PASS: UI hit region is excluded from mouse-look recapture.
+Controls: L toggles while playing; Esc unlocks the pointer to click Global Lighting ON/OFF in the top-right.

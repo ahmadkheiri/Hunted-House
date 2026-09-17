@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController), typeof(GlobalLightingToggle))]
 public sealed class ChildFirstPersonController : MonoBehaviour
 {
     [Header("Child proportions (metres)")]
@@ -62,12 +62,12 @@ public sealed class ChildFirstPersonController : MonoBehaviour
         if(keyboard!=null && keyboard.escapeKey.wasPressedThisFrame) ReleaseMouse();
         if(Cursor.lockState!=CursorLockMode.Locked)
         {
-            if(mouse!=null && mouse.leftButton.wasPressedThisFrame && Application.isFocused) CaptureMouse();
+            if(mouse!=null && mouse.leftButton.wasPressedThisFrame && Application.isFocused && !GlobalLightingToggle.IsPointerOverButton(mouse.position.ReadValue()) && !LanternController.IsPointerOverPanel(mouse.position.ReadValue())) CaptureMouse();
             SimulateInput(Vector2.zero,Vector2.zero,false,IsCrouching,false,Time.deltaTime);
             return;
         }
         if(keyboard!=null && keyboard.rKey.wasPressedThisFrame) { Respawn(); return; }
-        if(keyboard!=null && keyboard.fKey.wasPressedThisFrame && flashlight!=null) flashlight.enabled=!flashlight.enabled;
+        // LanternController handles F and brightness controls.
         Vector2 move=Vector2.zero;
         if(keyboard!=null)
         {
@@ -152,7 +152,7 @@ public sealed class ChildFirstPersonController : MonoBehaviour
         var old=GUI.color;GUI.color=new Color(0,0,0,.65f);GUI.DrawTexture(new Rect(0,Screen.height-42,Screen.width,42),Texture2D.whiteTexture);
         GUI.color=Color.white;
         string text=Cursor.lockState==CursorLockMode.Locked?
-            "WASD  Move     Mouse  Look     Shift  Sprint     Ctrl / C  Crouch     Space  Small jump     F  Flashlight     R  Restart     Esc  Release mouse":
+            "WASD  Move     Mouse  Look     Shift  Sprint     Ctrl / C  Crouch     Space  Small jump     F  Lantern   1/2  Brightness     R  Restart     Esc  Release mouse":
             "Click to play — explore the house through a child's eyes";
         GUI.Label(new Rect(8,Screen.height-39,Screen.width-16,32),text,helpStyle);
         if(Stamina01<.99f)

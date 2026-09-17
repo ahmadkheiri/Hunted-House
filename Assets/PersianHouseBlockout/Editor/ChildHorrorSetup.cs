@@ -58,9 +58,7 @@ public static class ChildHorrorSetup
             camera.tag="MainCamera";camera.fieldOfView=62;camera.nearClipPlane=.03f;camera.farClipPlane=200;
             var hd=camera.gameObject.AddComponent<HDAdditionalCameraData>();hd.clearColorMode=HDAdditionalCameraData.ClearColorMode.Color;hd.backgroundColorHDR=new Color(.18f,.19f,.21f);
             controller.playerCamera=camera;
-            var torch=new GameObject("Child flashlight - F to toggle",typeof(Light));torch.transform.SetParent(camera.transform,false);torch.transform.localPosition=new Vector3(.12f,-.10f,.08f);
-            var light=torch.GetComponent<Light>();light.type=LightType.Spot;light.lightUnit=LightUnit.Candela;light.intensity=4000;light.range=16;light.spotAngle=62;light.innerSpotAngle=32;light.color=new Color(1,.94f,.84f);light.shadows=LightShadows.Soft;
-            torch.AddComponent<HDAdditionalLightData>();controller.flashlight=light;
+            LanternSetup.Configure(controller);
             // A blockout child silhouette casts a small shadow without covering the first-person view.
             var silhouette=new GameObject("Child silhouette - shadow only");silhouette.transform.SetParent(player.transform,false);
             var mat=AssetDatabase.LoadAssetAtPath<Material>(Dir+"/Materials/Blockout - recesses.mat");
@@ -74,7 +72,7 @@ public static class ChildHorrorSetup
             SceneManager.SetActiveScene(previous);EditorSceneManager.CloseScene(scene,true);
             AssetDatabase.SaveAssets();AssetDatabase.Refresh();
             EditorSceneManager.playModeStartScene=AssetDatabase.LoadAssetAtPath<SceneAsset>(Path);
-            File.WriteAllText(Dir+"/CHILD_PLAYER_README.txt","PLAY: Tools > Persian House > Play as Child (or press Play).\nPlayable scene: "+Path+"\nChildPlayer.prefab is reusable. Environment is 1.5x on X/Y/Z, with expanded room wings. Child remains unscaled; 1 unit = 1 metre.\nChild height 1.10m; eyes 0.95m; collider radius 0.19m.\nCrouch: height 0.70m, eyes 0.56m.\nWalk 1.65m/s; sprint 2.9m/s for 4 seconds; crouch 0.8m/s.\nMouse look; WASD move; Shift sprint; Ctrl/C crouch; Space small jump; F flashlight; R restart; Esc unlock cursor.\nRoof enabled in the playable scene; original blockout scene remains unchanged.\nBody is a primitive shadow silhouette, not an animated character model.\nHead bob is disabled by default; all dimensions and movement settings are editable on the child controller.\n");
+            File.WriteAllText(Dir+"/CHILD_PLAYER_README.txt","PLAY: Tools > Persian House > Play as Child (or press Play).\nPlayable scene: "+Path+"\nChildPlayer.prefab is reusable. Environment is 1.5x on X/Y/Z, with expanded room wings. Child remains unscaled; 1 unit = 1 metre.\nChild height 1.10m; eyes 0.95m; collider radius 0.19m.\nCrouch: height 0.70m, eyes 0.56m.\nWalk 1.65m/s; sprint 2.9m/s for 4 seconds; crouch 0.8m/s.\nMouse look; WASD move; Shift sprint; Ctrl/C crouch; Space small jump; F lantern; 1 dimmer; 2 brighter; R restart; Esc unlock cursor.\nRoof enabled in the playable scene; original blockout scene remains unchanged.\nBody is a primitive shadow silhouette, not an animated character model.\nHead bob is disabled by default; all dimensions and movement settings are editable on the child controller.\n");
             SessionState.SetBool("ChildHorrorTest",true);EditorApplication.delayCall+=PlayChild;
         }
         catch(Exception e) {Debug.LogException(e);File.WriteAllText(Report,"SETUP FAILED\n"+e);if(previous.IsValid()) SceneManager.SetActiveScene(previous);}

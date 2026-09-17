@@ -1,0 +1,5 @@
+PASS: Point source converts 60 lumens to 4.775 candela.
+PASS: Brightness clamps to 10..200 lumens.
+PASS: Switching off disables light and flame; switching on restores them.
+PASS: Global lighting toggle leaves lantern active.
+Controls: F on/off; 1 dimmer; 2 brighter. Esc to click corner buttons.

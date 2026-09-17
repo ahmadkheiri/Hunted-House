@@ -1,0 +1,5 @@
+PASS: Night scene loads with 0.15 lux moon.
+PASS: elevation and azimuth rotate the moon light.
+PASS: moon intensity clamps to 0..1 lux.
+PASS: L disables/restores moonlight while preserving the lantern.
+Night sky preview rendered in Play Mode.
