@@ -1,0 +1,17 @@
+SUCCESS
+Scene: Assets/PersianHouseBlockout/PersianHouse_Blockout.unity
+One Unity unit = one metre.
+Reference bar: approx. 81 pixels / 10m.
+Footprint: 27.2 x 40.8m; courtyard: 17.6 x 18.8m.
+Floor elevations: -3.4 / 0 / +4.2m.
+Doorways: 1.2 x 2.4m; main passages 1.8 x 2.7m.
+Walls: 0.30m; floor slabs: 0.22m.
+Pool: 3.8 x 8m, depth 0.6m.
+Solid objects: 522
+West ground to first: 24 risers of 175 mm; tread 280 mm; clear width 1150 mm.
+East ground to first: 24 risers of 175 mm; tread 280 mm; clear width 1150 mm.
+Basement to ground stairs: 24 risers of 142 mm; tread 280 mm; clear width 1150 mm.
+PASS: 72 stair treads have at least 1.95m overhead clearance.
+PASS: entrance, Hashti, courtyard and Iwan central passages are open.
+Concept inferred: heights, precise partitions, cellar extent and stair connectivity.
+Roof disabled for blockout inspection. No textures or decorative assets.

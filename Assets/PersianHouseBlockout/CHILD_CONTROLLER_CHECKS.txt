@@ -1,0 +1,8 @@
+SUCCESS - actual Unity Play Mode tests
+PASS: child-height camera and entrance traversal.
+PASS: corridor wall collision.
+PASS: crouch and blocked-standing clearance.
+PASS: actual west stairs reached first floor at +8.4m.
+PASS: actual cellar stairs reached -6.8m.
+PASS: limited sprint and recovery.
+PASS: small jump and restart.

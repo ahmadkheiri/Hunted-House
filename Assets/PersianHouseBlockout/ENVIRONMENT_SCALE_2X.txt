@@ -1,0 +1,6 @@
+Environment scale: X=2, Y=2, Z=2 (absolute).
+Footprint: 54.4 x 81.6m; courtyard: 35.2 x 37.6m.
+First floor: +8.4m; cellar: -6.8m.
+Child unchanged: body 1.10m, eyes 0.95m, scale 1,1,1.
+Spawn moved to the scaled entrance. Step allowance 0.38m supports the enlarged 0.35m stair risers.
+Earlier BUILD_REPORT dimensions describe the original 1x source layout.
