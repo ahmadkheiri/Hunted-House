@@ -1,0 +1,4 @@
+Restored all 24 original arcade groups in the house prefab and both scenes.
+Removed the two Kitbash facade instances.
+Verified: no Kitbash mesh or material dependencies remain in the house prefab or scenes.
+Retained the 1.5x environment, expanded rooms and child controller.

@@ -112,3 +112,7 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Unused local asset pack (not part of the game)
+/Assets/Kitbash3D.Middle.East.fbx-ma-obj-jpg_persiangfx.com/
+/Assets/Kitbash3D.Middle.East.fbx-ma-obj-jpg_persiangfx.com.meta

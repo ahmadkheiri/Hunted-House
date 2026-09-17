@@ -41,7 +41,7 @@ public static class ChildHorrorSetup
             SceneManager.SetActiveScene(scene);
             foreach(var r in scene.GetRootGameObjects())
             {
-                if(r.transform.Find("01 GROUND FLOOR - 0.00m")!=null) r.transform.localScale=Vector3.one*2f;
+                if(r.transform.Find("01 GROUND FLOOR - 0.00m")!=null) PersianHouseScaleSetup.Resize(r.transform);
                 foreach(var cam in r.GetComponentsInChildren<Camera>(true)) {cam.gameObject.SetActive(false);cam.tag="Untagged";}
                 foreach(var t in r.GetComponentsInChildren<Transform>(true))
                 {
@@ -50,7 +50,7 @@ public static class ChildHorrorSetup
                 }
             }
             var player=new GameObject("CHILD PLAYER - 1.10m tall - eye height 0.95m",typeof(CharacterController));
-            player.transform.position=new Vector3(0,.04f,-38.8f);
+            player.transform.position=PersianHouseScaleSetup.LayoutPoint(0,.04f,-19.4f);
             var controller=player.AddComponent<ChildFirstPersonController>();
             var body=player.GetComponent<CharacterController>();body.height=1.1f;body.radius=.19f;body.center=new Vector3(0,.55f,0);body.stepOffset=.38f;body.skinWidth=.025f;
             var camera=new GameObject("Child Eyes - 0.95m",typeof(Camera),typeof(AudioListener)).GetComponent<Camera>();
@@ -74,7 +74,7 @@ public static class ChildHorrorSetup
             SceneManager.SetActiveScene(previous);EditorSceneManager.CloseScene(scene,true);
             AssetDatabase.SaveAssets();AssetDatabase.Refresh();
             EditorSceneManager.playModeStartScene=AssetDatabase.LoadAssetAtPath<SceneAsset>(Path);
-            File.WriteAllText(Dir+"/CHILD_PLAYER_README.txt","PLAY: Tools > Persian House > Play as Child (or press Play).\nPlayable scene: "+Path+"\nChildPlayer.prefab is reusable. Environment is 2x on X/Y/Z. Child remains unscaled; 1 unit = 1 metre.\nChild height 1.10m; eyes 0.95m; collider radius 0.19m.\nCrouch: height 0.70m, eyes 0.56m.\nWalk 1.65m/s; sprint 2.9m/s for 4 seconds; crouch 0.8m/s.\nMouse look; WASD move; Shift sprint; Ctrl/C crouch; Space small jump; F flashlight; R restart; Esc unlock cursor.\nRoof enabled in the playable scene; original blockout scene remains unchanged.\nBody is a primitive shadow silhouette, not an animated character model.\nHead bob is disabled by default; all dimensions and movement settings are editable on the child controller.\n");
+            File.WriteAllText(Dir+"/CHILD_PLAYER_README.txt","PLAY: Tools > Persian House > Play as Child (or press Play).\nPlayable scene: "+Path+"\nChildPlayer.prefab is reusable. Environment is 1.5x on X/Y/Z, with expanded room wings. Child remains unscaled; 1 unit = 1 metre.\nChild height 1.10m; eyes 0.95m; collider radius 0.19m.\nCrouch: height 0.70m, eyes 0.56m.\nWalk 1.65m/s; sprint 2.9m/s for 4 seconds; crouch 0.8m/s.\nMouse look; WASD move; Shift sprint; Ctrl/C crouch; Space small jump; F flashlight; R restart; Esc unlock cursor.\nRoof enabled in the playable scene; original blockout scene remains unchanged.\nBody is a primitive shadow silhouette, not an animated character model.\nHead bob is disabled by default; all dimensions and movement settings are editable on the child controller.\n");
             SessionState.SetBool("ChildHorrorTest",true);EditorApplication.delayCall+=PlayChild;
         }
         catch(Exception e) {Debug.LogException(e);File.WriteAllText(Report,"SETUP FAILED\n"+e);if(previous.IsValid()) SceneManager.SetActiveScene(previous);}
@@ -84,7 +84,7 @@ public static class ChildHorrorSetup
         var o=GameObject.CreatePrimitive(type);o.name=name;o.transform.SetParent(parent,false);o.transform.localPosition=at;o.transform.localScale=scale;
         UnityEngine.Object.DestroyImmediate(o.GetComponent<Collider>());var renderer=o.GetComponent<Renderer>();renderer.sharedMaterial=material;renderer.shadowCastingMode=ShadowCastingMode.ShadowsOnly;
     }
-    static void RenderChildPreview(Scene scene,Camera camera)
+    public static void RenderChildPreview(Scene scene,Camera camera)
     {
         var hidden=new List<GameObject>();
         for(int i=0;i<SceneManager.sceneCount;i++)
@@ -96,7 +96,7 @@ public static class ChildHorrorSetup
         var rt=new RenderTexture(1440,900,24);var prior=RenderTexture.active;
         try
         {
-            camera.transform.parent.position=new Vector3(7.2f,.03f,-13.6f);
+            camera.transform.parent.position=PersianHouseScaleSetup.LayoutPoint(3.6f,.03f,-6.8f);
             camera.transform.rotation=Quaternion.Euler(-8,-12,0);
             rt.Create();RenderPipeline.SubmitRenderRequest(camera,new RenderPipeline.StandardRequest{destination=rt});
             RenderTexture.active=rt;var tex=new Texture2D(1440,900,TextureFormat.RGB24,false);tex.ReadPixels(new Rect(0,0,1440,900),0,0);tex.Apply();File.WriteAllBytes(Dir+"/Child_Eye_View.png",tex.EncodeToPNG());UnityEngine.Object.DestroyImmediate(tex);
@@ -122,17 +122,17 @@ public static class ChildHorrorSetup
             Check(c.transform.localScale==Vector3.one,"Child scale stays 1x");
             Check(Mathf.Abs(c.Body.height-1.1f)<.01f,"1.10m child collider");
             Step(c,Vector2.zero,60);Check(Mathf.Abs(c.playerCamera.transform.position.y-c.transform.position.y-.95f)<.02f,"Eyes 0.95m above feet");
-            Step(c,Vector2.up,600);Check(c.transform.position.z>-24,"Walking traverses the entrance");results.Add("PASS: child-height camera and entrance traversal.");
-            c.Teleport(new Vector3(0,.04f,-37.2f),Quaternion.identity);Step(c,Vector2.right,240);Check(c.transform.position.x<3.8f,"Walls stop the controller");results.Add("PASS: corridor wall collision.");
-            c.Teleport(new Vector3(0,.04f,-37.2f),Quaternion.identity);Step(c,Vector2.zero,30,true);
-            var ceiling=GameObject.CreatePrimitive(PrimitiveType.Cube);ceiling.name="Temporary clearance test";ceiling.transform.position=new Vector3(0,.99f,-37.2f);ceiling.transform.localScale=new Vector3(1,.2f,1);Physics.SyncTransforms();
+            Step(c,Vector2.up,600);Check(c.transform.position.z>-18,"Walking traverses the entrance");results.Add("PASS: child-height camera and entrance traversal.");
+            c.Teleport(PersianHouseScaleSetup.LayoutPoint(0,.04f,-18.6f),Quaternion.identity);Step(c,Vector2.right,240);Check(c.transform.position.x<2.83f,"Walls stop the controller");results.Add("PASS: corridor wall collision.");
+            c.Teleport(PersianHouseScaleSetup.LayoutPoint(0,.04f,-18.6f),Quaternion.identity);Step(c,Vector2.zero,30,true);
+            var ceiling=GameObject.CreatePrimitive(PrimitiveType.Cube);ceiling.name="Temporary clearance test";ceiling.transform.position=PersianHouseScaleSetup.LayoutPoint(0,.99f,-18.6f);ceiling.transform.localScale=new Vector3(1,.2f,1);Physics.SyncTransforms();
             Step(c,Vector2.zero,30);Check(c.IsCrouching && c.Body.height<.75f,"Cannot stand into low ceiling");UnityEngine.Object.DestroyImmediate(ceiling);Physics.SyncTransforms();Step(c,Vector2.zero,30);Check(!c.IsCrouching,"Can stand after ceiling clears");results.Add("PASS: crouch and blocked-standing clearance.");
-            c.Teleport(new Vector3(-25.45f,.04f,20.8f),Quaternion.identity);Step(c,Vector2.zero,30);
-            WalkTo(c,new Vector3(-25.45f,0,10.9f));WalkTo(c,new Vector3(-22.85f,0,10.9f));WalkTo(c,new Vector3(-22.85f,0,20.7f));Step(c,Vector2.zero,30);
-            Check(Mathf.Abs(c.transform.position.y-8.4f)<.15f,"Climb the actual 24-step staircase");results.Add("PASS: actual west stairs reached first floor at +8.4m.");
-            c.Teleport(new Vector3(-22.85f,.04f,20.7f),Quaternion.identity);Step(c,Vector2.zero,30);
-            WalkTo(c,new Vector3(-22.85f,0,10.9f));WalkTo(c,new Vector3(-25.45f,0,10.9f));WalkTo(c,new Vector3(-25.45f,0,20.7f));Step(c,Vector2.zero,45);
-            Check(Mathf.Abs(c.transform.position.y+6.8f)<.15f,"Descend to actual cellar");results.Add("PASS: actual cellar stairs reached -6.8m.");
+            c.Teleport(PersianHouseScaleSetup.LayoutPoint(-12.725f,.04f,10.4f),Quaternion.identity);Step(c,Vector2.zero,30);
+            WalkTo(c,PersianHouseScaleSetup.LayoutPoint(-12.725f,0,5.45f));WalkTo(c,PersianHouseScaleSetup.LayoutPoint(-11.425f,0,5.45f));WalkTo(c,PersianHouseScaleSetup.LayoutPoint(-11.425f,0,10.35f));Step(c,Vector2.zero,30);
+            Check(Mathf.Abs(c.transform.position.y-6.3f)<.15f,"Climb the actual 24-step staircase");results.Add("PASS: actual west stairs reached first floor at +6.3m.");
+            c.Teleport(PersianHouseScaleSetup.LayoutPoint(-11.425f,.04f,10.35f),Quaternion.identity);Step(c,Vector2.zero,30);
+            WalkTo(c,PersianHouseScaleSetup.LayoutPoint(-11.425f,0,5.45f));WalkTo(c,PersianHouseScaleSetup.LayoutPoint(-12.725f,0,5.45f));WalkTo(c,PersianHouseScaleSetup.LayoutPoint(-12.725f,0,10.35f));Step(c,Vector2.zero,45);
+            Check(Mathf.Abs(c.transform.position.y+5.1f)<.15f,"Descend to actual cellar");results.Add("PASS: actual cellar stairs reached -5.1m.");
             c.Respawn();Step(c,Vector2.zero,30);for(int i=0;i<270;i++)c.SimulateInput(Vector2.up,Vector2.zero,true,false,false,1f/60);
             Check(c.Stamina01<.1f && !c.IsSprinting,"Sprint stamina exhausts");Step(c,Vector2.zero,450);Check(c.Stamina01>.95f,"Stamina recovers");results.Add("PASS: limited sprint and recovery.");
             c.Respawn();Step(c,Vector2.zero,30);float y0=c.transform.position.y;c.SimulateInput(Vector2.zero,Vector2.zero,false,false,true,1f/60);Step(c,Vector2.zero,8);Check(c.transform.position.y>y0+.1f,"Small jump works");results.Add("PASS: small jump and restart.");

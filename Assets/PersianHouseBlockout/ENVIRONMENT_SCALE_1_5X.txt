@@ -1,0 +1,8 @@
+CURRENT LAYOUT: overall X/Y/Z scale 1.5, with expanded room wings.
+Footprint approximately 45.3 x 68.1m (was 54.4 x 81.6m).
+Courtyard: 26.4 x 28.2m. First floor +6.3m; cellar -5.1m.
+Side room wings widened 50% in source space; north and south rooms deepened 25%.
+Typical side-room clear width approx. 6.08m (was 5.4m in the 2x layout).
+Child unchanged: body 1.10m, eyes 0.95m.
+All blockout parts remain separate editable objects, including colliders.
+This report supersedes ENVIRONMENT_SCALE_2X and original BUILD_REPORT dimensions.
